@@ -7,11 +7,13 @@ import { CreateUsersComponent } from './components/create-users/create-users.com
 import { Routes, RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
+import { OutputUsersComponent } from './components/output-users/output-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateUsersComponent
+    CreateUsersComponent,
+    OutputUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -7,8 +7,8 @@ export class UserService {
   users: IUser[] = [];
   constructor() { }
   public getUser(): IUser[]{
-   
-    let getJsonUser = localStorage.getItem("Users");
+
+    let getJsonUser = localStorage.getItem("User");
     if (getJsonUser){
       this.users = JSON.parse(getJsonUser);
     }

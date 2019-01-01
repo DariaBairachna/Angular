@@ -1,7 +1,15 @@
+<div class="form-group d-inline-block">
 <label for="name">Name</label>
-<input type="text" id="name" [(ngModel)]="name" /> <label for="age">Age</label>
-<input type="text" id="age" [(ngModel)]="age" />
+<input type="text" id="name" [(ngModel)]="name" class="form-control "/></div>
+<div class="form-group d-inline-block">
+ <label for="age">Age</label>
+<input type="text" id="age" [(ngModel)]="age" class="form-control "/></div>
+<div class="form-group d-inline-block">
 <label for="email">Email</label>
-<input type="text" id="email" [(ngModel)]="email" />
+<input type="text" id="email" [(ngModel)]="email" class="form-control "/>
+</div>
+<button (click)="addUser()" class="btn btn-primary">Save</button>
+<br/>
+<br/>
+<app-output-users></app-output-users>
 
-<button (click)="addUser()">Save</button>
