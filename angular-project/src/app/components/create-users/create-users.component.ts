@@ -18,9 +18,7 @@ export class CreateUsersComponent implements OnInit {
   ngOnInit() {}
 
   private generateId(): string {
-    let idValue = Math.random()
-      .toString(10)
-      .substr(2, 9);
+    let idValue = Math.random().toString(10).substr(2, 9);
     return idValue;
   }
 
@@ -68,7 +66,7 @@ export class CreateUsersComponent implements OnInit {
       return false;
     }
 
-    let users = this.userService.getUser();
+    let users = this.userService.getUsers();
     let user: IUser = {
       Name: this.name,
       Age: this.age,
@@ -76,9 +74,11 @@ export class CreateUsersComponent implements OnInit {
       Id: idElement
     };
     users.push(user);
-    this.userService.addUser(users);
-    alert("User has been added sucsesfuly!")
-    console.log(user);
-    
+    this.userService.saveUsers(users);
+    alert("User has been added sucsesfuly!");
+
+    this.name = "";
+    this.age = 0;
+    this.email = "";
   }
 }

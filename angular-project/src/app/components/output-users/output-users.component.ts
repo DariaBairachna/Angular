@@ -9,93 +9,56 @@ import { UserService } from "../../services/user-service.service";
 export class OutputUsersComponent implements OnInit {
   public userService: UserService;
   public users: IUser[];
+  public resultFilter: IUser[];
+  public user: IUser;
+  public filterValue: string; 
+  
+  
   constructor() {
     this.userService = new UserService();
-    this.users = this.userService.getUser();
-    this.outputUsers();
+    this.users = this.userService.getUsers();
    }
 
   ngOnInit() {
-  }
-  public createTableUser(){
-    let createTable = document.createElement("div");
-    document.body.appendChild(createTable);
-    createTable.id = "table";
-    return createTable;
-  }
-
-  public createTableRow( wrapperBlock:HTMLDivElement, user:IUser){
-    
-    let createWrapElement = document.createElement("div");
-    createWrapElement.id = user.Id;
-    let createNewUserElement = document.createElement("div")
-    let createButtonDelete = document.createElement("button");
-    createButtonDelete.className = "btn btn-primary";
-    createNewUserElement.innerHTML = user.Name + " " + user.Age + " " + user.Email;
-    createButtonDelete.innerHTML = "Delete";
-    createButtonDelete.setAttribute("click", "deleteUser('" + user.Id + "')");
-    wrapperBlock.appendChild(createWrapElement);
-    createWrapElement.appendChild(createNewUserElement);
-    createWrapElement.appendChild(createButtonDelete);
-    
-  }
-
-  public outputUsers() {
-    let wrapperBlock = this.createTableUser();
-    for (let user of this.users) {
-      this.createTableRow(wrapperBlock, user);
-    }
+    this.resultFilter = this.users;
   }
   public compare() {
-    let newUserArrey = [];
-    let filterInput = <HTMLInputElement>document.getElementById("filter");
-    let compareValue = filterInput.value;
-    document.body.removeChild(document.getElementById("table"));
-    let wrapperBlock = this.createTableUser();
-    for (let i = 0; i < this.users.length; i++) {
-      let userString = this.users[i].Name + " " + this.users[i].Age + " " + this.users[i].Email;
-      let findValue = userString.indexOf(compareValue) != -1;
-      if (findValue == true) {
-        this.createTableRow(wrapperBlock, this.users[i]);
-        newUserArrey.push(userString);
+    console.log(this.resultFilter);
+    this.resultFilter = this.users.filter(
+    
+      user => {
+               if(user.Name.toLowerCase().search(this.filterValue.toLowerCase())!= -1 || user.Email.toLowerCase().search(this.filterValue.toLowerCase()) != -1 || user.Age.toString().search(this.filterValue) != -1 ){
+           return true;
+        }
+      });
       }
-    }
-    return newUserArrey;
-  }
 
   public bubbleSort() {
-    for (let i = 0; i < this.users.length - 1; i++) {
-      for (let j = 0; j < this.users.length - 1 - i; j++) {
-        let ageNumber = this.users[j].Age;
-        let ageNumberNextUser = this.users[j + 1].Age;
+    for (let i = 0; i < this.resultFilter.length - 1; i++) {
+      for (let j = 0; j < this.resultFilter.length - 1 - i; j++) {
+        let ageNumber = Number( this.resultFilter[j].Age);
+        let ageNumberNextUser = Number(this.resultFilter[j + 1].Age);
         if (ageNumber > ageNumberNextUser) {
-          let upElement = this.users[j];
-          this.users[j] = this.users[j + 1];
-          this.users[j + 1] = upElement;
+          let upElement = this.resultFilter[j];
+          this.resultFilter[j] = this.resultFilter[j + 1];
+          this.resultFilter[j + 1] = upElement;
         }
       }
     }
-    document.body.removeChild(document.getElementById("table"));
-    let wrapperBlock = this.createTableUser();
-    for (let i = 0; i < this.compare().length, i < this.users.length; i++) {
-      this.createTableRow(wrapperBlock, this.users[i]);
-    }
-    return this.users;
-    
   }
 
   public deleteUser(user: IUser) {
-    let table = document.getElementById("table");
     let userId = user.toString();
-    table.removeChild(document.getElementById(userId));
-    this.userService.getUser()
+    this.userService.getUsers()
     for (let user of this.users) {
       if(user.Id == userId){
         var indexUser = this.users.indexOf(user);
       }
     }
     this.users.splice(indexUser, 1);
-    this.userService.addUser(this.users);
+    this.resultFilter = this.users;
+    this.compare();
+    this.userService.saveUsers(this.users);
   }
 }
 

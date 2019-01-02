@@ -6,7 +6,7 @@ import { IUser } from '../interface/user';
 export class UserService {
   users: IUser[] = [];
   constructor() { }
-  public getUser(): IUser[]{
+  public getUsers(): IUser[]{
 
     let getJsonUser = localStorage.getItem("User");
     if (getJsonUser){
@@ -14,7 +14,7 @@ export class UserService {
     }
     return this.users;
   }
-  public addUser(users){
+  public saveUsers(users){
     console.log("adasdlkasslkdsa")
     localStorage.setItem("User", JSON.stringify(users)) ;
   }
