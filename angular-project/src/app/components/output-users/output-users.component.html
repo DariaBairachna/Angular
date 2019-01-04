@@ -1,13 +1,25 @@
-<div class="input-group ">
+<div class="input-group d-flex justify-content-between">
   <button (click)="bubbleSort()" class="btn btn-primary">Sort Age</button>
-  <input type="text" id="filter" [(ngModel)]="filterValue" (ngModelChange)=compare() class="form-control d-inline-block col-3">
-  <button (click)="compare()" class="btn btn-primary">Filter</button></div>
-  <br/>
-  <br/>
-  <div class="table">
-    <div *ngFor="let user of resultFilter" id={{user.Id}} class="mb-3">
-      <div class="d-inline-block">{{user.Name + " " + user.Age + " " + user.Email}}</div>
-      <button (click)="deleteUser(user.Id)" class="btn btn-danger ml-3">Delete</button>
+  <div class="sort-group d-flex justify-content-between">
+    <input
+      type="text"
+      id="filter"
+      [(ngModel)]="filterValue"
+      (ngModelChange)="compare()"
+      class="form-control d-inline-block"
+    />
+    <button (click)="compare()" class="btn btn-primary filter-btn">Filter</button>
+  </div>
+</div>
+<br />
+<br />
+<div class="table ">
+  <div *ngFor="let user of resultFilter"  id="{{ user.Id }}" class="row py-2 border-row align-items-center">
+    <div class="col-8">{{ user.Name + " " + user.Age + " " + user.Email }}</div>
+    <div class="col-4 text-right">
+      <button (click)="deleteUser(user.Id)" class="btn btn-danger ml-3">
+        Delete
+      </button>
     </div>
   </div>
-
+</div>

@@ -1,16 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { IUser } from "../../interface/user";
+import { Component, OnInit, EventEmitter, Output} from "@angular/core";
+import { IUser } from "../../models/user.model";
 import { UserService } from "../../services/user-service.service";
 @Component({
-  selector: "app-create-users",
+  selector: "create-user",
   templateUrl: "./create-users.component.html",
   styleUrls: ["./create-users.component.scss"]
 })
-export class CreateUsersComponent implements OnInit {
+export class CreateUsersComponent implements OnInit{
   public userService: UserService;
   public name: string = "";
   public age: number = 0;
   public email: string = "";
+  public users:  IUser[];
+  public resultFilter: IUser[] = [];
+  @Output() onAddUser = new EventEmitter();
   constructor() {
     this.userService = new UserService();
   }
@@ -30,7 +33,7 @@ export class CreateUsersComponent implements OnInit {
     return result;
   }
 
-  public validateForm() {
+  public validateForm():boolean {
     let validateEmail = this.isValidEmailAddress(this.email);
     if (this.name == "") {
       alert("Name is empty!");
@@ -58,25 +61,26 @@ export class CreateUsersComponent implements OnInit {
     }
   }
 
-  public addUser() {
+  public addUser():boolean{
+   
     let idElement = this.generateId();
-
     let validation = this.validateForm();
     if (validation == false) {
       return false;
     }
-
-    let users = this.userService.getUsers();
+    this.users = this.userService.getUsers();
     let user: IUser = {
       Name: this.name,
       Age: this.age,
       Email: this.email,
       Id: idElement
     };
-    users.push(user);
-    this.userService.saveUsers(users);
+    
+    this.users.push(user);
+    this.userService.saveUsers(this.users);
     alert("User has been added sucsesfuly!");
-
+    this.resultFilter = this.users;
+    this.onAddUser.emit(null);
     this.name = "";
     this.age = 0;
     this.email = "";

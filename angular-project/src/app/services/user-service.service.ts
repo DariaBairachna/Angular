@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../interface/user';
+import { IUser } from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +14,7 @@ export class UserService {
     }
     return this.users;
   }
-  public saveUsers(users){
-    console.log("adasdlkasslkdsa")
-    localStorage.setItem("User", JSON.stringify(users)) ;
+  public saveUsers(users):void{
+     localStorage.setItem("User", JSON.stringify(users)) ;
   }
 }
