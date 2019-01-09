@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges} from "@angular/core";
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter} from "@angular/core";
 import { IUser } from "../../models/user.model";
 import { UserService } from "../../services/user-service.service";
 @Component({
@@ -11,8 +11,9 @@ export class OutputUsersComponent implements OnInit {
   public users: IUser[];
   public resultFilter: IUser[] = [];
   public filterValue: string;
-
+  public modalShow: boolean = false;
   @Input() isRefresh: boolean;
+  @Output() openModal = new EventEmitter();
   constructor() {
     this.userService = new UserService();
   }
@@ -20,6 +21,7 @@ export class OutputUsersComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.users = this.userService.getUsers();
     this.resultFilter = this.users;
+    this.openModal.emit(this.modalShow);
     this.compare();
     this.bubbleSort();
   }
@@ -67,4 +69,7 @@ export class OutputUsersComponent implements OnInit {
     this.compare();
     this.userService.saveUsers(this.users);
   }
+  
+   
+
 }

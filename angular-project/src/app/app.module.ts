@@ -11,6 +11,7 @@ import { OutputUsersComponent } from './components/output-users/output-users.com
 import { UsersComponent } from './pages/users/users.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
+import { UpdateModalComponent } from './components/update-modal/update-modal.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
     OutputUsersComponent,
     UsersComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UpdateModalComponent
   ],
   imports: [
     BrowserModule,
