@@ -8,12 +8,14 @@ import { UserService } from "../../services/user-service.service";
 })
 export class OutputUsersComponent implements OnInit {
   public userService: UserService;
+  public user: IUser;
   public users: IUser[];
   public resultFilter: IUser[] = [];
   public filterValue: string;
   public modalShow: boolean = false;
   @Input() isRefresh: boolean;
-  @Output() openModal = new EventEmitter();
+  @Output() onUpdateUser = new EventEmitter();
+  // @Output() userId = new EventEmitter();
   constructor() {
     this.userService = new UserService();
   }
@@ -21,7 +23,6 @@ export class OutputUsersComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.users = this.userService.getUsers();
     this.resultFilter = this.users;
-    this.openModal.emit(this.modalShow);
     this.compare();
     this.bubbleSort();
   }
@@ -57,7 +58,7 @@ export class OutputUsersComponent implements OnInit {
   }
 
   public deleteUser(user: IUser) {
-    let userId = user.toString();
+    var userId = user.toString();
     this.userService.getUsers();
     for (let user of this.users) {
       if (user.Id == userId) {
@@ -68,8 +69,12 @@ export class OutputUsersComponent implements OnInit {
     this.resultFilter = this.users;
     this.compare();
     this.userService.saveUsers(this.users);
+   
   }
   
-   
+  public openModal() {
+    this.onUpdateUser.emit(this.modalShow);
+  } 
+ 
 
 }

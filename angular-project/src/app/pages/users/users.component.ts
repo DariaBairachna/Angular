@@ -11,8 +11,15 @@ export class UsersComponent implements OnInit {
   public userService: UserService;
   public isRefresh: boolean = false;
   public modalShow: boolean = false;
+  public userId: string;
+
+  user:IUser;
+  users:IUser[];
+
+
   constructor() {
     this.userService = new UserService();
+
   }
 
   ngOnInit() {}
@@ -20,9 +27,16 @@ export class UsersComponent implements OnInit {
   public onAddUser() {
     this.isRefresh = !this.isRefresh;
   }
-  public openModal() {
+  
+  public onUpdateUser(){
     this.modalShow = !this.modalShow;
-    return this.modalShow;
-    console.log(this.modalShow);
+    this.users = this.userService.getUsers();
+    for (this.user of this.users) {
+      var userId = this.user.Id;
+     
+    }
+  console.log(userId);
   }
+
+
 }
