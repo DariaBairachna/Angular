@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output} from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { IUser } from "../../models/user.model";
 import { UserService } from "../../services/user-service.service";
 @Component({
@@ -6,12 +6,12 @@ import { UserService } from "../../services/user-service.service";
   templateUrl: "./create-users.component.html",
   styleUrls: ["./create-users.component.scss"]
 })
-export class CreateUsersComponent implements OnInit{
+export class CreateUsersComponent implements OnInit {
   public userService: UserService;
   public name: string = "";
   public age: number = 0;
   public email: string = "";
-  public users:  IUser[];
+  public users: IUser[];
   public resultFilter: IUser[] = [];
   @Output() onAddUser = new EventEmitter();
   constructor() {
@@ -33,7 +33,7 @@ export class CreateUsersComponent implements OnInit{
     return result;
   }
 
-  public validateForm():boolean {
+  public validateForm(): boolean {
     let validateEmail = this.isValidEmailAddress(this.email);
     if (this.name == "") {
       alert("Name is empty!");
@@ -60,9 +60,13 @@ export class CreateUsersComponent implements OnInit{
       return false;
     }
   }
+  public clearForm() {
+    this.name = "";
+    this.age = 0;
+    this.email = "";
+  }
 
-  public addUser():boolean{
-   
+  public addUser(): boolean {
     let idElement = this.generateId();
     let validation = this.validateForm();
     if (validation == false) {
@@ -75,14 +79,12 @@ export class CreateUsersComponent implements OnInit{
       Email: this.email,
       Id: idElement
     };
-    
+
     this.users.push(user);
     this.userService.saveUsers(this.users);
     alert("User has been added sucsesfuly!");
     this.resultFilter = this.users;
     this.onAddUser.emit(null);
-    this.name = "";
-    this.age = 0;
-    this.email = "";
+    this.clearForm();
   }
 }

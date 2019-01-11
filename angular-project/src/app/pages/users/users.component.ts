@@ -16,27 +16,25 @@ export class UsersComponent implements OnInit {
   user:IUser;
   users:IUser[];
 
-
   constructor() {
     this.userService = new UserService();
-
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   public onAddUser() {
     this.isRefresh = !this.isRefresh;
   }
   
-  public onUpdateUser(){
+  public forUpdateUser(emitInformation){
     this.modalShow = !this.modalShow;
-    this.users = this.userService.getUsers();
-    for (this.user of this.users) {
-      var userId = this.user.Id;
-     
-    }
-  console.log(userId);
+    this.userId = emitInformation.userId;
   }
-
+  public closeModalEvent(){
+    this.modalShow = !this.modalShow;
+    this.onAddUser();
+  }
 
 }

@@ -3,14 +3,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Update user</h5>
-        <button type="button" class="close" (click)="openModal()">
+        <button type="button" class="close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="row mb-3">
-          <div class="form-group col-md-4">
-            <label for="apdateName">Name</label>
+     
+          <div class="form-group">
+            <label for="updateName">Name</label>
             <input
               type="text"
               id="updateName"
@@ -18,8 +18,8 @@
               class="form-control"
             />
           </div>
-          <div class="form-group col-md-2">
-            <label for="apdateAge">Age</label>
+          <div class="form-group ">
+            <label for="updateAge">Age</label>
             <input
               type="text"
               id="updateAge"
@@ -27,8 +27,8 @@
               class="form-control "
             />
           </div>
-          <div class="form-group col-md-4">
-            <label for="apdateEmail">Email</label>
+          <div class="form-group ">
+            <label for="updateEmail">Email</label>
             <input
               type="text"
               id="updateEmail"
@@ -36,12 +36,12 @@
               class="form-control "
             />
           </div>
-          <div class="col-md-2 d-flex align-items-center justify-content-end">
-            <button (click)="addUser()" class="btn btn-primary mt-3  w-100">
+          <div class="d-flex align-items-center justify-content-end">
+            <button (click)="updateUser()" class="btn btn-primary mt-3">
               Save
             </button>
           </div>
-        </div>
+       
       </div>
     </div>
   </div>

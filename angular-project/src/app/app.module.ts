@@ -14,6 +14,7 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
 import { UpdateModalComponent } from './components/update-modal/update-modal.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

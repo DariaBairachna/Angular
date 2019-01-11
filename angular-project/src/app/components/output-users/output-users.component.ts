@@ -13,9 +13,11 @@ export class OutputUsersComponent implements OnInit {
   public resultFilter: IUser[] = [];
   public filterValue: string;
   public modalShow: boolean = false;
+  public userId: string
+  public emitInformation: object ;
+
   @Input() isRefresh: boolean;
-  @Output() onUpdateUser = new EventEmitter();
-  // @Output() userId = new EventEmitter();
+  @Output() forUpdateUser = new EventEmitter();
   constructor() {
     this.userService = new UserService();
   }
@@ -59,7 +61,6 @@ export class OutputUsersComponent implements OnInit {
 
   public deleteUser(user: IUser) {
     var userId = user.toString();
-    this.userService.getUsers();
     for (let user of this.users) {
       if (user.Id == userId) {
         var indexUser = this.users.indexOf(user);
@@ -71,10 +72,18 @@ export class OutputUsersComponent implements OnInit {
     this.userService.saveUsers(this.users);
    
   }
+
+
+  public openModal(userId:string) {
+    this.emitInformation = {
+      modalShow: this.modalShow,
+      userId: userId
+    }
+    this.forUpdateUser.emit(this.emitInformation);
+   } 
   
-  public openModal() {
-    this.onUpdateUser.emit(this.modalShow);
-  } 
- 
+
+
+
 
 }

@@ -11,7 +11,7 @@
   <div *ngFor="let user of resultFilter"  id="{{ user.Id }}" class="row py-2 border-row align-items-center">
     <div class="col-8">{{ user.Name + " " + user.Age + " " + user.Email }}</div>
     <div class="col-4 text-right">
-      <button (click)="openModal()" class="btn btn-success ml-3">Apdate</button>
+      <button (click)="openModal(user.Id)" class="btn btn-success ml-3">Update</button>
       <button (click)="deleteUser(user.Id)" class="btn btn-danger ml-3">Delete</button>
     </div>
   </div>
