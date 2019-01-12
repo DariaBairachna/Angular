@@ -60,7 +60,7 @@ export class CreateUsersComponent implements OnInit {
       return false;
     }
   }
-  public clearForm() {
+  public clearForm():void {
     this.name = "";
     this.age = 0;
     this.email = "";

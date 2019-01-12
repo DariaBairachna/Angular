@@ -82,7 +82,7 @@ export class UpdateModalComponent implements OnInit {
   }
 
 
-  public updateUser(){
+  public updateUser():boolean{
 
    let validation = this.validateForm();
     if (validation == false) {

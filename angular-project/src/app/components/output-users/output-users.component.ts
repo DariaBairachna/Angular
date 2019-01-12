@@ -33,7 +33,7 @@ export class OutputUsersComponent implements OnInit {
     this.resultFilter = this.users;
   }
 
-  public compare() {
+  public compare():void {
     if (this.filterValue !== undefined) {
       this.resultFilter = this.users.filter(user => {
         if (user.Name.toLowerCase().search(this.filterValue.toLowerCase()) != -1 ||
@@ -45,7 +45,7 @@ export class OutputUsersComponent implements OnInit {
     }
   }
 
-  public bubbleSort() {
+  public bubbleSort():void {
     for (let i = 0; i < this.resultFilter.length - 1; i++) {
       for (let j = 0; j < this.resultFilter.length - 1 - i; j++) {
         let ageNumber = Number(this.resultFilter[j].Age);
@@ -59,7 +59,7 @@ export class OutputUsersComponent implements OnInit {
     }
   }
 
-  public deleteUser(user: IUser) {
+  public deleteUser(user: IUser):void {
     var userId = user.toString();
     for (let user of this.users) {
       if (user.Id == userId) {
@@ -74,7 +74,7 @@ export class OutputUsersComponent implements OnInit {
   }
 
 
-  public openModal(userId:string) {
+  public openModal(userId: string):void {
     this.emitInformation = {
       modalShow: this.modalShow,
       userId: userId
