@@ -8,33 +8,22 @@
         </button>
       </div>
       <div class="modal-body">
-     
-          <div class="form-group">
+          <div class="form-group " [ngClass]="{ 'is-invalid': validateName }">
             <label for="updateName">Name</label>
-            <input
-              type="text"
-              id="updateName"
-              [(ngModel)]="name"
-              class="form-control"
-            />
+            <input type="text" id="updateName" [(ngModel)]="name" class="form-control"/>
+            <div class="error-message">Name is empty!</div>
           </div>
-          <div class="form-group ">
+          <div class="form-group " [ngClass]="{ 'is-invalid': validateAge || validateAgeEmpty}">
             <label for="updateAge">Age</label>
-            <input
-              type="text"
-              id="updateAge"
-              [(ngModel)]="age"
-              class="form-control "
-            />
+            <input type="text" id="updateAge" [(ngModel)]="age" class="form-control "/>
+            <div class="error-message" *ngIf ="validateAge">Age must be number!</div>
+            <div class="error-message" *ngIf ="validateAgeEmpty">Age is empty!</div>
           </div>
-          <div class="form-group ">
+          <div class="form-group" [ngClass]="{ 'is-invalid': validateEmailValue || validateEmailEmpty}">
             <label for="updateEmail">Email</label>
-            <input
-              type="text"
-              id="updateEmail"
-              [(ngModel)]="email"
-              class="form-control "
-            />
+            <input type="text" id="updateEmail" [(ngModel)]="email" class="form-control"/>
+            <div class="error-message " *ngIf ="validateEmailEmpty">Email is empty!</div>
+            <div class="error-message" *ngIf ="validateEmailValue">Email invalid</div>
           </div>
           <div class="d-flex align-items-center justify-content-end">
             <button (click)="updateUser()" class="btn btn-primary mt-3">

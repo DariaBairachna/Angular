@@ -9,14 +9,19 @@ import { CreateUsersComponent  } from "../create-users/create-users.component";
   styleUrls: ["./update-modal.component.scss"]
 })
 export class UpdateModalComponent implements OnInit {
-  user: IUser;
-  name: string; 
-  age: number; 
-  email: string; 
-  id: string;
-  userService: UserService;
-  createUser: CreateUsersComponent;
-  users: IUser[] = [];
+  public user: IUser;
+  public name: string; 
+  public age: number; 
+  public email: string; 
+  public id: string;
+  public userService: UserService;
+  public createUser: CreateUsersComponent;
+  public users: IUser[] = [];
+  private validateName = false;
+  private validateAge = false;
+  private validateAgeEmpty = false;
+  private validateEmailEmpty = false;
+  private validateEmailValue = false;
   public userInfo:number;
   public resultFilter: IUser[] = [];
   @Output() closeModalEvent = new EventEmitter();
@@ -55,30 +60,37 @@ export class UpdateModalComponent implements OnInit {
 
   public validateForm(): boolean {
     let validateEmail = this.isValidEmailAddress(this.email);
+ this.validateName = false;
+    this.validateAge = false;
+    this.validateAgeEmpty = false;
+    this.validateEmailEmpty = false;
+    this.validateEmailValue = false;
     if (this.name == "") {
-      alert("Name is empty!");
-      return false;
+      this.validateName = true;
+    
     }
 
     if (isNaN(this.age)) {
-      alert("Age must be number!");
-      return false;
+      this.validateAge = true;
     }
 
-    if (this.age == null) {
-      alert("Age is empty!");
-      return false;
+    if (this.age.toString() == "") {
+      this.validateAgeEmpty = true;
     }
 
     if (this.email == "") {
-      alert("Email is empty!");
+      this.validateEmailEmpty = true;
       return false;
     }
 
     if (validateEmail == false) {
-      alert("Email invalid");
+      this.validateEmailValue = true;
+    }
+    
+    if (this.validateName == true || this.validateAge == true || this.validateAgeEmpty == true || this.validateEmailValue == true ){
       return false;
     }
+    
   }
 
 

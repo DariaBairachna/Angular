@@ -12,6 +12,12 @@ export class CreateUsersComponent implements OnInit {
   public age: number = 0;
   public email: string = "";
   public users: IUser[];
+  private validateName = false;
+  private validateAge = false;
+  private validateAgeEmpty = false;
+  private validateEmailEmpty = false;
+  private validateEmailValue = false;
+  // public validateValue: boolean = false;
   public resultFilter: IUser[] = [];
   @Output() onAddUser = new EventEmitter();
   constructor() {
@@ -35,30 +41,36 @@ export class CreateUsersComponent implements OnInit {
 
   public validateForm(): boolean {
     let validateEmail = this.isValidEmailAddress(this.email);
+ this.validateName = false;
+    this.validateAge = false;
+    this.validateAgeEmpty = false;
+    this.validateEmailEmpty = false;
+    this.validateEmailValue = false;
     if (this.name == "") {
-      alert("Name is empty!");
-      return false;
+      this.validateName = true;
+    
     }
 
     if (isNaN(this.age)) {
-      alert("Age must be number!");
-      return false;
+      this.validateAge = true;
     }
 
-    if (this.age == null) {
-      alert("Age is empty!");
-      return false;
+    if (this.age.toString() == "") {
+      this.validateAgeEmpty = true;
     }
 
     if (this.email == "") {
-      alert("Email is empty!");
+      this.validateEmailEmpty = true;
       return false;
     }
 
     if (validateEmail == false) {
-      alert("Email invalid");
+      this.validateEmailValue = true;
+    }
+    if (this.validateName == true || this.validateAge == true || this.validateAgeEmpty == true || this.validateEmailValue == true ){
       return false;
     }
+    
   }
   public clearForm():void {
     this.name = "";
@@ -83,6 +95,7 @@ export class CreateUsersComponent implements OnInit {
     this.users.push(user);
     this.userService.saveUsers(this.users);
     alert("User has been added sucsesfuly!");
+
     this.resultFilter = this.users;
     this.onAddUser.emit(null);
     this.clearForm();

@@ -1,17 +1,22 @@
 <div class="row mb-3">
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': validateName }">
     <label for="name">Name</label>
-    <input type="text" id="name" [(ngModel)]="name" class="form-control" />
+    <input type="text" id="name" [(ngModel)]="name"  class="form-control" />
+    <div class="error-message">Name is empty!</div>
   </div>
-  <div class="form-group col-md-2">
+  <div class="form-group col-md-2" [ngClass]="{ 'is-invalid': validateAge || validateAgeEmpty}">
     <label for="age">Age</label>
     <input type="text" id="age" [(ngModel)]="age" class="form-control " />
+    <div class="error-message" *ngIf ="validateAge">Age must be number!</div>
+    <div class="error-message" *ngIf ="validateAgeEmpty">Age is empty!</div>
   </div>
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': validateEmailValue || validateEmailEmpty}">
     <label for="email">Email</label>
     <input type="text" id="email" [(ngModel)]="email" class="form-control " />
+    <div class="error-message " *ngIf ="validateEmailEmpty">Email is empty!</div>
+    <div class="error-message" *ngIf ="validateEmailValue">Email invalid</div>
   </div>
   <div class="col-md-2 d-flex align-items-center justify-content-end">
-    <button (click)="addUser()" class="btn btn-primary mt-3  w-100">Save</button>
+    <button (click)="addUser()" class="btn btn-primary mb-3 w-100">Save</button>
   </div>
 </div>
