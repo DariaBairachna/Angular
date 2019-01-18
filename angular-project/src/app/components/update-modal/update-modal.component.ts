@@ -22,6 +22,11 @@ export class UpdateModalComponent implements OnInit {
   private validateAgeEmpty = false;
   private validateEmailEmpty = false;
   private validateEmailValue = false;
+  // private validationFields:{
+      
+
+
+  // }
   public userInfo:number;
   public resultFilter: IUser[] = [];
   @Output() closeModalEvent = new EventEmitter();
