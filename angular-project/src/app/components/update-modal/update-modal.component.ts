@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, EventEmitter, Output} from "@angular/core";
 import { IUser } from "../../models/user.model";
 import { UserService } from "../../services/user-service.service";
+import { IValidation } from "../../models/validation.model";
 import { CreateUsersComponent  } from "../create-users/create-users.component";
 // import { UsersComponent } from "../../pages/users/users.component";
 @Component({
@@ -10,23 +11,53 @@ import { CreateUsersComponent  } from "../create-users/create-users.component";
 })
 export class UpdateModalComponent implements OnInit {
   public user: IUser;
-  public name: string; 
-  public age: number; 
-  public email: string; 
-  public id: string;
+  public notNumber: boolean;
+  public maxAge: boolean;
   public userService: UserService;
   public createUser: CreateUsersComponent;
   public users: IUser[] = [];
-  private validateName = false;
-  private validateAge = false;
-  private validateAgeEmpty = false;
-  private validateEmailEmpty = false;
-  private validateEmailValue = false;
-  // private validationFields:{
+  name: IValidation = {
+    value: "",
+    validation: function(): boolean {
+      if(this.value.length < 3){
+        return true;
+      }
+    },
+    isEmpty: this.isEmpty
+   
+  
+  };
+  age: IValidation = {
+    value: "",
+    validation: function(): boolean {
+      if(isNaN(parseFloat(this.value))){
+        return this.notNumber =  true;
+      } 
+      if(parseFloat(this.value)>150){
       
-
-
-  // }
+        this.notNumber = false;
+        return this.maxAge = true
+      }
+    
+    },
+    isEmpty: this.isEmpty
+   
+  };
+  email: IValidation = {
+    value: "",
+    validation: function(): boolean {
+      var pattern = new RegExp(
+        /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+      );
+      var validateEmail = pattern.test(this.value);
+      if(!validateEmail){
+     
+            return true;
+      }
+    },
+    isEmpty: this.isEmpty
+   
+  };
   public userInfo:number;
   public resultFilter: IUser[] = [];
   @Output() closeModalEvent = new EventEmitter();
@@ -42,13 +73,20 @@ export class UpdateModalComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.userInfo = this.getUserInfo();
   }
+
+  private isEmpty(value:string): boolean{
+    if(value == ""){
+          
+      return true;
+     }
+  }
   public getUserInfo():number {
     for (this.user of this.users) {
       if (this.user.Id == this.userId) {
         var indexUser = this.users.indexOf(this.user);
-        this.name = this.users[indexUser].Name;
-        this.age = this.users[indexUser].Age;
-        this.email = this.users[indexUser].Email;
+        this.name.value = this.users[indexUser].Name;
+        this.age.value = (this.users[indexUser].Age).toString();
+        this.email.value = this.users[indexUser].Email;
         return indexUser;
       }
     }
@@ -64,39 +102,13 @@ export class UpdateModalComponent implements OnInit {
   }
 
   public validateForm(): boolean {
-    let validateEmail = this.isValidEmailAddress(this.email);
- this.validateName = false;
-    this.validateAge = false;
-    this.validateAgeEmpty = false;
-    this.validateEmailEmpty = false;
-    this.validateEmailValue = false;
-    if (this.name == "") {
-      this.validateName = true;
-    
-    }
+   
+    if ( this.name.validation() || this.name.isEmpty(this.name.value) || this.age.validation() || this.age.isEmpty(this.age.value) || this.email.validation() || this.email.isEmpty(this.email.value) ) {
+        return false;
+      }
 
-    if (isNaN(this.age)) {
-      this.validateAge = true;
-    }
-
-    if (this.age.toString() == "") {
-      this.validateAgeEmpty = true;
-    }
-
-    if (this.email == "") {
-      this.validateEmailEmpty = true;
-      return false;
-    }
-
-    if (validateEmail == false) {
-      this.validateEmailValue = true;
-    }
-    
-    if (this.validateName == true || this.validateAge == true || this.validateAgeEmpty == true || this.validateEmailValue == true ){
-      return false;
-    }
-    
-  }
+     
+  } 
 
 
   public updateUser():boolean{
@@ -107,9 +119,9 @@ export class UpdateModalComponent implements OnInit {
     }
     this.users = this.userService.getUsers();
     let user: IUser = {
-      Name: this.name,
-      Age: this.age,
-      Email: this.email,
+      Name: this.name.value,
+      Age: Number(this.age.value),
+      Email: this.email.value,
       Id: this.userId
     };
     this.users.splice(this.getUserInfo(), 1, user);

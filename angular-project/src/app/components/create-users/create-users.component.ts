@@ -1,4 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  SimpleChanges
+} from "@angular/core";
 import { IUser } from "../../models/user.model";
 import { IValidation } from "../../models/validation.model";
 import { UserService } from "../../services/user-service.service";
@@ -11,30 +17,28 @@ export class CreateUsersComponent implements OnInit {
   public userService: UserService;
   public users: IUser[];
   public notNumber: boolean;
-  public ageValue: boolean;
+  public maxAge: boolean;
   name: IValidation = {
     value: "",
     validation: function(): boolean {
-      if(this.value.length < 3){
+      if (this.value.length < 3) {
         return true;
       }
     },
     isEmpty: this.isEmpty
-   
-  
   };
   age: IValidation = {
     value: "",
     validation: function(): boolean {
-      if(isNaN(parseFloat(this.value))){
-        return  this.notNumber = true;
+      if (isNaN(parseFloat(this.value))) {
+        return (this.notNumber = true);
       }
-      if(parseFloat(this.value)>150){
-        return this.ageValue = true;
+      if (parseFloat(this.value) > 150) {
+        this.notNumber = false;
+        return (this.maxAge = true);
       }
     },
     isEmpty: this.isEmpty
-   
   };
   email: IValidation = {
     value: "",
@@ -43,24 +47,18 @@ export class CreateUsersComponent implements OnInit {
         /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
       );
       var validateEmail = pattern.test(this.value);
-      if(!validateEmail){
-     
-            return true;
+      if (!validateEmail) {
+        return true;
       }
     },
     isEmpty: this.isEmpty
-   
   };
-
-
 
   // public validateValue: boolean = true;
   public resultFilter: IUser[] = [];
   @Output() onAddUser = new EventEmitter();
   constructor() {
     this.userService = new UserService();
-
-  
   }
 
   ngOnInit() {}
@@ -72,23 +70,24 @@ export class CreateUsersComponent implements OnInit {
     return idValue;
   }
 
-private isEmpty(value:string): boolean{
-  if(value == ""){
-        
-    return true;
-   }
-}
+  private isEmpty(value: string): boolean {
+    if (value == "") {
+      return true;
+    }
+  }
 
-
-
-   public validateForm(): boolean {
-
-    if ( this.name.validation() || this.name.isEmpty(this.name.value) || this.age.validation() || this.age.isEmpty(this.age.value) || this.email.validation() || this.email.isEmpty(this.email.value) ) {
-        return false;
-      }
-
-     
-  } 
+  public validateForm(): boolean {
+    if (
+      this.name.validation() ||
+      this.name.isEmpty(this.name.value) ||
+      this.age.validation() ||
+      this.age.isEmpty(this.age.value) ||
+      this.email.validation() ||
+      this.email.isEmpty(this.email.value)
+    ) {
+      return false;
+    }
+  }
 
   public clearForm(): void {
     // this.name = "";
@@ -98,9 +97,8 @@ private isEmpty(value:string): boolean{
 
   public addUser(): boolean {
     let idElement = this.generateId();
-    let validation = this.validateForm();
 
-    console.log(this.name.validation());
+    let validation = this.validateForm();
 
     if (validation == false) {
       return false;
@@ -121,4 +119,6 @@ private isEmpty(value:string): boolean{
     this.onAddUser.emit(null);
     this.clearForm();
   }
+
+
 }

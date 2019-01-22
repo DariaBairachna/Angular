@@ -7,16 +7,16 @@
   </div>
   <div class="form-group col-md-2" [ngClass]="{ 'is-invalid': this.age.validation() || this.age.isEmpty()}">
     <label for="age">Age</label>
-    <input type="text" id="age" [(ngModel)]="age.value" class="form-control " />
-    <div class="error-message" *ngIf ="age.validation()">Age must be number!</div>
+    <input type="text" id="age" [(ngModel)]="age.value"  class="form-control " />
+    <div class="error-message" *ngIf ="age.notNumber">Age must be number!</div>
     <div class="error-message" *ngIf ="age.isEmpty(age.value)">Age is empty!</div>
-    <div class="error-message" *ngIf ="age.validation()">Value > 150</div>
+    <div class="error-message" *ngIf ="age.maxAge">Value > 150</div>
   </div>
   <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': this.email.validation() || this.age.isEmpty()}">
     <label for="email">Email</label>
     <input type="text" id="email" [(ngModel)]="email.value" (ngModelChange)="validateForm()" class="form-control " />
     <div class="error-message " *ngIf ="email.isEmpty(email.value)">Email is empty!</div>
-    <div class="error-message" *ngIf ="this.email.validation()">Email invalid</div>
+    <div class="error-message" *ngIf ="email.validation()">Email invalid</div>
   </div>
   <div class="col-md-2 d-flex align-items-center justify-content-end">
     <button (click)="addUser()" class="btn btn-primary mb-3 w-100">Save</button>
