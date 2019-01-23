@@ -1,22 +1,22 @@
 <div class="row mb-3">
-  <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': this.name.validation() || this.name.isEmpty() }">
+  <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': this.name.validation()  || this.name.isEmpty() }">
     <label for="name">Name</label>
-    <input type="text" id="name" [(ngModel)]="name.value"  class="form-control" />
-    <div class="error-message" *ngIf ="name.isEmpty(name.value)">Name is empty!</div>
-    <div class="error-message" *ngIf ="name.validation()">Short name</div>
+    <input #nameInput type="text" id="name" name="name" [(ngModel)]="name.value"  class="form-control" />
+    <div class="error-message"  *ngIf ="name.isEmpty(name.value)">Name is empty!</div>
+    <div class="error-message" *ngIf ="name.validation() && !name.isEmpty(name.value)">Short name</div>
   </div>
   <div class="form-group col-md-2" [ngClass]="{ 'is-invalid': this.age.validation() || this.age.isEmpty()}">
     <label for="age">Age</label>
-    <input type="text" id="age" [(ngModel)]="age.value"  class="form-control " />
-    <div class="error-message" *ngIf ="age.notNumber">Age must be number!</div>
+    <input #ageInput type="text" name="age" id="age" [(ngModel)]="age.value" (keyup)="keyUp($event)"  class="form-control" />
+    <div class="error-message" *ngIf ="age.notNumber && !age.isEmpty(age.value)">Age must be number!</div>
     <div class="error-message" *ngIf ="age.isEmpty(age.value)">Age is empty!</div>
-    <div class="error-message" *ngIf ="age.maxAge">Value > 150</div>
+    <div class="error-message" *ngIf ="age.maxAge && !age.isEmpty(age.value)">Value > 150</div>
   </div>
-  <div class="form-group col-md-4" [ngClass]="{ 'is-invalid': this.email.validation() || this.age.isEmpty()}">
+  <div class="form-group col-md-4" [ngClass]="{'is-invalid': this.email.validation() || this.age.isEmpty()}">
     <label for="email">Email</label>
-    <input type="text" id="email" [(ngModel)]="email.value" (ngModelChange)="validateForm()" class="form-control " />
-    <div class="error-message " *ngIf ="email.isEmpty(email.value)">Email is empty!</div>
-    <div class="error-message" *ngIf ="email.validation()">Email invalid</div>
+    <input #emailInput type="text" id="email" name="email" [(ngModel)]="email.value" (ngModelChange)="validateForm()" class="form-control " />
+    <div class="error-message" *ngIf ="email.isEmpty(email.value)">Email is empty!</div>
+    <div class="error-message" *ngIf ="email.validation() && !email.isEmpty(email.value)">Email invalid</div>
   </div>
   <div class="col-md-2 d-flex align-items-center justify-content-end">
     <button (click)="addUser()" class="btn btn-primary mb-3 w-100">Save</button>

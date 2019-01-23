@@ -12,20 +12,20 @@
             <label for="updateName">Name</label>
             <input type="text" id="updateName" [(ngModel)]="name.value" class="form-control"/>
             <div class="error-message" *ngIf ="name.isEmpty(name.value)">Name is empty!</div>
-            <div class="error-message" *ngIf ="name.validation()">Short name</div>
+            <div class="error-message" *ngIf ="name.validation() && !name.isEmpty(age.value)">Short name</div>
           </div>
           <div class="form-group " [ngClass]="{ 'is-invalid':  this.age.validation() || this.age.isEmpty()}">
             <label for="updateAge">Age</label>
             <input type="text" id="updateAge" [(ngModel)]="age.value" class="form-control "/>
-            <div class="error-message" *ngIf ="age.notNumber">Age must be number!</div>
+            <div class="error-message" *ngIf ="age.notNumber && !age.isEmpty(age.value)">Age must be number!</div>
             <div class="error-message" *ngIf ="age.isEmpty(age.value)">Age is empty!</div>
-            <div class="error-message" *ngIf ="age.maxAge">Value > 150</div>
+            <div class="error-message" *ngIf ="age.maxAge && !age.isEmpty(age.value)">Value > 150</div>
           </div>
           <div class="form-group" [ngClass]="{ 'is-invalid':  this.email.validation() || this.email.isEmpty()}">
             <label for="updateEmail">Email</label>
             <input type="text" id="updateEmail" [(ngModel)]="email.value" class="form-control"/>
             <div class="error-message " *ngIf ="email.isEmpty(email.value)">Email is empty!</div>
-            <div class="error-message" *ngIf ="email.validation()">Email invalid</div>
+            <div class="error-message" *ngIf ="email.validation() && !email.isEmpty(email.value)">Email invalid</div>
           </div>
           <div class="d-flex align-items-center justify-content-end">
             <button (click)="updateUser()" class="btn btn-primary mt-3">

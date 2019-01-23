@@ -11,8 +11,7 @@ import { CreateUsersComponent  } from "../create-users/create-users.component";
 })
 export class UpdateModalComponent implements OnInit {
   public user: IUser;
-  public notNumber: boolean;
-  public maxAge: boolean;
+  
   public userService: UserService;
   public createUser: CreateUsersComponent;
   public users: IUser[] = [];
@@ -31,6 +30,7 @@ export class UpdateModalComponent implements OnInit {
     value: "",
     validation: function(): boolean {
       if(isNaN(parseFloat(this.value))){
+ 
         return this.notNumber =  true;
       } 
       if(parseFloat(this.value)>150){
