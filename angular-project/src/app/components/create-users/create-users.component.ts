@@ -1,4 +1,4 @@
-import { Component,  OnInit,  EventEmitter,  Output, ViewChild, ElementRef} from "@angular/core";
+import {  Component,  OnInit,  EventEmitter,  Output,  ViewChild,  ElementRef} from "@angular/core";
 import { IUser } from "../../models/user.model";
 import { IValidation } from "../../models/validation.model";
 import { UserService } from "../../services/user-service.service";
@@ -48,26 +48,22 @@ export class CreateUsersComponent implements OnInit {
     isEmpty: this.isEmpty
   };
 
-  // public validateValue: boolean = true;
   public resultFilter: IUser[] = [];
   @Output() onAddUser = new EventEmitter();
-  @ViewChild('nameInput') el:ElementRef;
+  // @ViewChild("nameInput") el: ElementRef;
   constructor() {
     this.userService = new UserService();
 
-  }
-
-  ngOnInit() {
 
   }
 
+  ngOnInit() {}
 
-public hasChange(){
- if( this.el.nativeElement.hasClass("ng-pristine")){
-   return false;
- }
-     
-}
+  // public hasChange() {
+  //   if (this.el.nativeElement.hasClass("ng-pristine")) {
+  //     return false;
+  //   }
+  // }
 
   private generateId(): string {
     let idValue = Math.random()
@@ -81,15 +77,14 @@ public hasChange(){
       return true;
     }
   }
-  keyUp(){
-    let valueAge = this.age.value; 
-    let rep = /[-\.;":'a-zA-Zа-яА-Я]/; 
-    if (rep.test(valueAge)) { 
-        valueAge = valueAge.replace(rep, ''); 
-        this.age.value = valueAge; 
-    } 
+  keyUp() {
+    let valueAge = this.age.value;
+    let rep = /[-\.;":'a-zA-Zа-яА-Я]/;
+    if (rep.test(valueAge)) {
+      valueAge = valueAge.replace(rep, "");
+      this.age.value = valueAge;
+    }
   }
-
 
   public validateForm(): boolean {
     if (
@@ -103,7 +98,6 @@ public hasChange(){
       return false;
     }
   }
-
 
   public clearForm(): void {
     // this.name = "";
@@ -135,7 +129,4 @@ public hasChange(){
     this.onAddUser.emit(null);
     this.clearForm();
   }
-
-
-
 }
